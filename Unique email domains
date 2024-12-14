@@ -1,0 +1,8 @@
+/* Write your T-SQL query statement below */
+
+SELECT 
+    SUBSTRING(email, CHARINDEX('@', email) + 1, LEN(email)) AS email_domain,
+    COUNT(*) AS count
+FROM Emails
+WHERE email LIKE '%.com%'
+GROUP BY SUBSTRING(email, CHARINDEX('@', email) + 1, LEN(email));
