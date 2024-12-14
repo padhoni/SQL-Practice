@@ -1,0 +1,8 @@
+select tweet_id
+from Tweets
+where 
+    LEN(content) - LEN(REPLACE(content, '#', ''))  > 3
+or
+    LEN(content) - LEN(REPLACE(content, '@', ''))  > 3
+or
+    len(content) >140
