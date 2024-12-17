@@ -1,0 +1,22 @@
+/* Write your T-SQL query statement below */
+
+WITH SellerTotal AS (
+    SELECT 
+        s.seller_id, 
+        SUM(s.price) AS total_price
+    FROM 
+        Sales s
+    INNER JOIN 
+        Product p
+    ON 
+        s.product_id = p.product_id
+    GROUP BY 
+        s.seller_id
+)
+SELECT 
+    seller_id
+FROM 
+    SellerTotal
+WHERE 
+    total_price = (SELECT MAX(total_price) FROM SellerTotal);
+
