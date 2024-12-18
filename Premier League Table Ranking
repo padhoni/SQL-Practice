@@ -1,0 +1,17 @@
+/* Write your T-SQL query statement below */
+
+
+
+
+
+SELECT 
+    team_id, 
+    team_name, 
+    SUM(wins * 3 + draws * 1 + losses * 0) AS points,
+    RANK() OVER (ORDER BY SUM(wins * 3 + draws * 1 + losses * 0) DESC) AS position
+FROM 
+    TeamStats
+GROUP BY 
+    team_id, team_name
+ORDER BY 
+    points DESC;
