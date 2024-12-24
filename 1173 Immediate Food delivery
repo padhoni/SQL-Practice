@@ -1,0 +1,14 @@
+
+
+WITH cte1 AS (
+    SELECT COUNT(delivery_id) AS total_deliveries
+    FROM Delivery
+),
+cte2 AS (
+    SELECT COUNT(delivery_id) AS immediate_deliveries
+    FROM Delivery
+    WHERE order_date = customer_pref_delivery_date
+)
+SELECT 
+    ROUND((CAST(cte2.immediate_deliveries AS FLOAT) / cte1.total_deliveries) * 100, 2) AS immediate_percentage
+FROM cte1, cte2;
