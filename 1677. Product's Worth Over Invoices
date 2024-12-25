@@ -1,0 +1,10 @@
+SELECT 
+    pd.name AS name,
+    COALESCE(SUM(inv.rest), 0) AS rest,
+    COALESCE(SUM(inv.paid), 0) AS paid,
+    COALESCE(SUM(inv.canceled), 0) AS canceled,
+    COALESCE(SUM(inv.refunded), 0) AS refunded
+FROM Product pd
+left JOIN Invoice inv ON pd.product_id = inv.product_id
+GROUP BY pd.product_id, pd.name
+ORDER BY pd.name;
