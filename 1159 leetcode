@@ -1,0 +1,18 @@
+
+with cte as(
+select o.order_id, o.order_date,
+    dense_rank() over (partition by o.seller_id order by order_date asc) as rnk,
+    o.seller_id, i.item_id, i.item_brand
+ from Orders o
+inner join Items i
+on o.item_id = i.item_id)
+
+select u.user_id as seller_id,
+    case
+        when u.favorite_brand = cte.item_brand then 'yes'
+        else 'no'
+    end as '2nd_item_fav_brand'
+from Users u
+left join cte
+on cte.seller_id = u.user_id
+and rnk=2
